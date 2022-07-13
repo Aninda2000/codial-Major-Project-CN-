@@ -2,6 +2,14 @@
 const express= require('express');
 const app=express();
 const port=8000;
+const ejsLayout=require('express-ejs-layouts');
+
+//make a common layout for all the pages
+app.use(ejsLayout);
+
+//setting for static files
+app.use(express.static('./assets'));
+
 
 //use the router middleware
 app.use(require('./routes/index'));//by default it always goes to index
