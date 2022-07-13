@@ -10,6 +10,9 @@ app.use(ejsLayout);
 //setting for static files
 app.use(express.static('./assets'));
 
+//setting for extract all the stylesheet and script
+app.set("layout extractStyles", true);
+app.set("layout extractScripts", true);
 
 //use the router middleware
 app.use(require('./routes/index'));//by default it always goes to index
