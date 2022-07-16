@@ -3,6 +3,7 @@ const express= require('express');
 const app=express();
 const port=8000;
 const ejsLayout=require('express-ejs-layouts');
+const db=require('./config/mongoose');
 
 //make a common layout for all the pages
 app.use(ejsLayout);
