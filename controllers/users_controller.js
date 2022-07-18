@@ -1,3 +1,9 @@
 module.exports.profile=function(req,res){
     res.render('user_profile');
 }
+ module.exports.signUp=function(req,res){
+    res.render('user_signUp');
+ }
+ module.exports.signIn=function(req,res){
+    res.render('user_signIn');
+ }
