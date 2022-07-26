@@ -1,12 +1,22 @@
 <html>
     <head>
+        <title>
+            <%= title  %>
+        </title>
         <link rel="stylesheet" href="/css/layout.css">
         <%- style %>
+        
     </head>
+
     <body>
-        <%- include('_header'); -%>
+        <%- include('_header'); %>
+
         <%- body %>
-        <%- include('_footer'); -%> 
+
+
+        <%- include('_footer'); %>
+
+        <%- script %>
+        
     </body>
-    <%- script %>
 </html>

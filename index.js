@@ -1,54 +1,55 @@
-//this is main file
-const express= require('express');
-const app=express();
-const port=8000;
-const ejsLayout=require('express-ejs-layouts');
-const db=require('./config/mongoose');
-const cookieParser=require('cookie-parser');
-//using passport and session
-const passport= require('passport');
-const passportLocal=require('./config/passport-local');
-const session=require('express-session');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+const port = 8000;
+const expressLayouts = require('express-ejs-layouts');
+const db = require('./config/mongoose');
+// used for session cookie
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
 
-//set up for passport and sessions
+app.use(express.urlencoded());
+
+app.use(cookieParser());
+
+app.use(express.static('./assets'));
+
+app.use(expressLayouts);
+// extract style and scripts from sub pages into the layout
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
+
+
+
+// set up the view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+
 app.use(session({
-    name:'codieal',
-    secret:'blahSomething',//to do change later
-    saveUninitialized:false,
-    resave:false,
-    cookie:{
-        maxAge :(1000*60*60)
+    name: 'codeial',
+    // TODO change the secret before deployment in production mode
+    secret: 'blahsomething',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60 * 100)
     }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+// use express router
+app.use('/', require('./routes'));
 
-//set up for cookie-parser
-app.use(express.urlencoded());
-app.use(cookieParser());
 
-//make a common layout for all the pages
-app.use(ejsLayout);
-
-//setting for static files
-app.use(express.static('./assets'));
-
-//setting for extract all the stylesheet and script
-app.set("layout extractStyles", true);
-app.set("layout extractScripts", true);
-
-//use the router middleware
-app.use(require('./routes/index'));//by default it always goes to index
-
-//set up view engine
-app.set('view engine','ejs');
-app.set('views','./views');
-
-app.listen(port,function(err){
-    if(err){
-        console.log(`Error : ${err}`);
+app.listen(port, function(err){
+    if (err){
+        console.log(`Error in running the server: ${err}`);
     }
-    console.log("listening to the port no ",port);
-})
+
+    console.log(`Server is running on port: ${port}`);
+});
