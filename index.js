@@ -5,6 +5,25 @@ const port=8000;
 const ejsLayout=require('express-ejs-layouts');
 const db=require('./config/mongoose');
 const cookieParser=require('cookie-parser');
+//using passport and session
+const passport= require('passport');
+const passportLocal=require('./config/passport-local');
+const session=require('express-session');
+
+//set up for passport and sessions
+app.use(session({
+    name:'codieal',
+    secret:'blahSomething',//to do change later
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge :(1000*60*60)
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //set up for cookie-parser
 app.use(express.urlencoded());

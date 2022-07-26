@@ -7,10 +7,11 @@ passport.use(new LocalStregedy({
     usernameField:'email'
     },
     function(email,password,done){
+        console.log("function calling");
         User.findOne({email:email},function(err,user){
             if(err){
                 console.log('error while using passport local');
-                return;
+                return done(err);
             }
             if(!user || user.password!=password){
                 console.log('Invalid Username/password');
