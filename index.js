@@ -4,6 +4,11 @@ const app=express();
 const port=8000;
 const ejsLayout=require('express-ejs-layouts');
 const db=require('./config/mongoose');
+const cookieParser=require('cookie-parser');
+
+//set up for cookie-parser
+app.use(express.urlencoded());
+app.use(cookieParser());
 
 //make a common layout for all the pages
 app.use(ejsLayout);
