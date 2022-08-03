@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-
+// let's keep it same as before
 module.exports.profile = function(req, res){
     User.findById(req.params.id, function(err, user){
         return res.render('user_profile', {
@@ -11,14 +11,14 @@ module.exports.profile = function(req, res){
 
 }
 
-module.exports.update=function(req,res){
+
+module.exports.update = function(req, res){
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-            if(err){console.log(err);return ;}
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
             return res.redirect('back');
         });
     }else{
-        res.status(401).send('unauthorized');
+        return res.status(401).send('Unauthorized');
     }
 }
 
@@ -72,11 +72,14 @@ module.exports.create = function(req, res){
 
 // sign in and create a session for the user
 module.exports.createSession = function(req, res){
+    req.flash('success', 'Logged in Successfully');
     return res.redirect('/');
 }
 
 module.exports.destroySession = function(req, res){
     req.logout();
+    req.flash('success', 'You have logged out!');
+
 
     return res.redirect('/');
 }
